@@ -1,8 +1,8 @@
 :root{
     --bg-color:#fff;
     --box-font-color:#000;
-    --box-color: hsl(0,0,70%);
-    --win-box-color:hsl(0,0,20%);
+    --box-color: hsl(0, 0%, 70%);
+    --win-box-color:hsl(0,0%,20%);
 }
 
 *{
@@ -18,8 +18,17 @@ section {
     text-align: center;
 }
 #gameBoard{
-    margin-inline: auto;
+    margin: 2rem auto;
     width: clamp(10rem, 80vw, 20rem);
+
+    display: grid;
+    gap:3px;
+    grid-template-columns: repeat(3, 1fr);
+}
+.gameBoard__box{
+    cursor: pointer;
+    aspect-ratio: 1;
+    background-color: var(--box-color);
 }
 button{
     cursor: pointer;
