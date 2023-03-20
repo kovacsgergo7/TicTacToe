@@ -15,17 +15,20 @@ const startGame = () => {
 
 function clickonBox(e){
     const boxID = e.target.id;
-    console.log(boxID);
+    e.target.innerText = currentPlayer;
 }
 
 function playerWins(){
-    
+
 }
 
 restartBtn.addEventListener("click", restartGame);
 
 function restartGame(){
-
+    hiddenBoard.fill(null);
+    boxes.forEach( box => {
+        box.innerText = "";
+    })
 }
 
 startGame();
