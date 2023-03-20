@@ -2,7 +2,7 @@
     --bg-color:#fff;
     --box-font-color:#000;
     --box-color: hsl(0, 0%, 70%);
-    --win-box-color:hsl(0,0%,20%);
+    --win-box-color:hsl(0, 0% ,20%);
 }
 
 *{
@@ -26,9 +26,14 @@ section {
     grid-template-columns: repeat(3, 1fr);
 }
 .gameBoard__box{
+    display: grid;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     aspect-ratio: 1;
     background-color: var(--box-color);
+    font-size: 3rem;
+    font-weight: 100;
 }
 button{
     cursor: pointer;
