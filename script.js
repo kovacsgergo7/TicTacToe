@@ -26,16 +26,22 @@ const winnerCombinations = [
 ]
 
 const startGame = () => {
-    boxes.forEach(box => box.addEventListener("click", clickonBox, {once:true}));
+    boxes.forEach(box => box.addEventListener("click", clickonBox, { once:true }));
 }
 
 function clickonBox(e){
     const boxID = e.target.id;
 
-    if(hiddenBoard[boxID] == null){
+    if(hiddenBoard[boxID] != null){
+        console.log("not empty");
+        return
+    }
+    
+    else if(hiddenBoard[boxID] == null){
         hiddenBoard[boxID] = currentPlayer;
         e.target.innerText = currentPlayer;
         moves++;
+        console.log(moves)
 
        
         if(playerWins() != false){
