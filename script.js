@@ -26,7 +26,7 @@ const winnerCombinations = [
 ]
 
 const startGame = () => {
-    boxes.forEach(box => box.addEventListener("click", clickonBox));
+    boxes.forEach(box => box.addEventListener("click", clickonBox, {once:true}));
 }
 
 function clickonBox(e){
