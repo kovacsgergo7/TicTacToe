@@ -39,8 +39,13 @@ function clickonBox(e){
 
        
         if(playerWins() != false){
-            result.innerText = currentPlayer + "wins";
-                }
+            let winnerBlocks = playerWins();
+            
+            winnerBlocks.map(box => boxes[box].style.backgroundColor = "red")
+
+            result.innerText = currentPlayer + " player WINS!";
+            boxes.forEach(box => box.removeEventListener("click", clickonBox));
+        }
         else if(moves == 9){
             result.innerText = "It is a TIE!"
         }
@@ -74,7 +79,9 @@ function restartGame(){
     
     moves = 0;
     result.innerText = "";
-    currentPlayer = X_PLAYER
+    currentPlayer = X_PLAYER;
+    boxes.forEach(box => box.style.backgroundColor = "");
+    boxes.forEach(box => box.addEventListener("click", clickonBox));
 }
 
 startGame();
