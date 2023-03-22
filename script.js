@@ -41,7 +41,8 @@ function clickonBox(e){
         if(playerWins() != false){
             let winnerBlocks = playerWins();
             
-            winnerBlocks.map(box => boxes[box].style.backgroundColor = "red")
+            //winnerBlocks.map(box => boxes[box].style.backgroundColor = "red")
+            winnerBlocks.map(box => boxes[box].classList.add("winner-boxes"));
 
             result.innerText = currentPlayer + " player WINS!";
             boxes.forEach(box => box.removeEventListener("click", clickonBox));
@@ -80,7 +81,7 @@ function restartGame(){
     moves = 0;
     result.innerText = "";
     currentPlayer = X_PLAYER;
-    boxes.forEach(box => box.style.backgroundColor = "");
+    boxes.forEach(box => box.classList.remove("winner-boxes"));
     boxes.forEach(box => box.addEventListener("click", clickonBox));
 }
 

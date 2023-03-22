@@ -2,7 +2,7 @@
     --bg-color:#fff;
     --box-font-color:#000;
     --box-color: hsl(0, 0%, 100%);
-    --win-box-color:hsl(0, 0% ,20%);
+    --win-box-color:hsl(257, 56%, 77%);
 
     --transition: .1s ease-in;
 }
@@ -45,7 +45,10 @@ section {
     transition: var(--transition);
 }
 .gameBoard__box:hover{
-    background-color: hsl(0, 0% ,90%);
+    background-color:  hsl(0, 0% ,90%);
+}
+.winner-boxes:hover{
+    background-color: var(--win-box-color);
 }
 button{
     cursor: pointer;
@@ -57,9 +60,14 @@ button{
     border-radius: 10px;
     outline: transparent;
     border: none;
-    background-color: hsl(0, 0% ,87%);
+    background-image: linear-gradient(to right, #ECE9E6 0%, #FFFFFF  51%, #ECE9E6  100%);
+    background-size: 200% auto;
     transition: var(--transition);
 }
 button:hover{
-    background-color: hsl(0, 0% ,77%);
+    background-position: right center;
+}
+
+.winner-boxes{
+    background-color: var(--win-box-color);
 }
