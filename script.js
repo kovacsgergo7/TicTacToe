@@ -1,6 +1,7 @@
-let gameBoard = document.getElementById("gameBoard");
 let boxes = Array.from(document.getElementsByClassName("gameBoard__box"));
 let restartBtn = document.getElementById("restartBtn");
+let playervsplayerBtn = document.getElementById("playervsplayer");
+let playervscomputerBtn = document.getElementById("playervsai");
 let result = document.getElementById("result");
 
 const X_PLAYER = "X";
@@ -25,12 +26,54 @@ const winnerCombinations = [
 ]
 
 function startGame(){
-    boxes.forEach(box => box.addEventListener("click", clickonBox));
+    boxes.forEach(box => box.addEventListener("click", playerVSai));
     restartBtn.addEventListener("click", restartGame);
 }
 
-function clickonBox(e){
-    const boxID = e.target.id;
+function playerVSai(e){
+    let boxID = e.target.id;
+    currentPlayer = X_PLAYER;
+    if(hiddenBoard[boxID] != null)
+    {
+        return
+    }
+    
+    hiddenBoard[boxID] = currentPlayer;
+    e.target.innerText = currentPlayer;
+    
+    //check for win
+
+   checkForWin();
+    
+    // todo: check tie
+    let isItTie = checkforTie();
+    if(isItTie)
+    {
+        result.innerText = "omg it is tie!";
+    }
+    else 
+    {
+        aiMove();
+        checkForWin(O_PLAYER);
+    }
+
+}
+
+function aiMove(){
+    currentPlayer = O_PLAYER;
+    while(true){
+        let randomNumber = Math.floor(Math.random() * 8);
+        console.log(randomNumber);
+        if(hiddenBoard[randomNumber] == null){
+            hiddenBoard[randomNumber] = O_PLAYER;
+            boxes[randomNumber].innerText = O_PLAYER;
+            break;
+        }
+    } 
+}
+
+function playerVSplayer(e){
+    let boxID = e.target.id;
 
     if(hiddenBoard[boxID] != null)
     {
@@ -48,7 +91,7 @@ function clickonBox(e){
 
     if(checkforTie())
     {
-        result.innerText = "omg it is tie!";
+        tieEndGame();
     }
 
     currentPlayer = currentPlayer == X_PLAYER ? O_PLAYER : X_PLAYER;
@@ -80,7 +123,11 @@ function checkForWin(){
 function endGame(winArray){
     result.innerText = currentPlayer + " player WINS!";
     winArray.map(box => boxes[box].classList.add("winner-boxes"));
-    boxes.forEach(box => box.removeEventListener("click", clickonBox));
+    boxes.forEach(box => box.removeEventListener("click", playerVSai));
+}
+
+function tieEndGame(){
+    result.innerText = "omg it is tie!";
 }
 
 
@@ -93,7 +140,6 @@ function restartGame(){
     result.innerText = "";
     currentPlayer = X_PLAYER;
     boxes.forEach(box => box.classList.remove("winner-boxes"));
-    boxes.forEach(box => box.addEventListener("click", clickonBox));
+    startGame();
 }
-
 startGame();
