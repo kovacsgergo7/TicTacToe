@@ -43,7 +43,9 @@ function playerVSai(e){
     
     //check for win
 
-   checkForWin();
+    if(checkForWin()){
+        return;
+       }
     
     // todo: check tie
     let isItTie = checkforTie();
@@ -85,11 +87,13 @@ function playerVSplayer(e){
     
     //check for win
 
-   checkForWin();
+   if(checkForWin()){
+    return;
+   }
     
     // todo: check tie
 
-    if(checkforTie())
+    else if(checkforTie())
     {
         tieEndGame();
     }
@@ -115,6 +119,7 @@ function checkForWin(){
         let winner = hiddenBoard[x] == currentPlayer && hiddenBoard[y] == currentPlayer && hiddenBoard[z] == currentPlayer;
         if(winner){
             endGame(winArray);
+            return true;
         }
     }
     return false;
@@ -127,7 +132,10 @@ function endGame(winArray){
 }
 
 function tieEndGame(){
+    if(!checkForWin())
+    {
     result.innerText = "omg it is tie!";
+    }
 }
 
 
