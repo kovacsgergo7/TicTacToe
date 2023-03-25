@@ -3,10 +3,9 @@ let boxes = Array.from(document.getElementsByClassName("gameBoard__box"));
 let restartBtn = document.getElementById("restartBtn");
 let result = document.getElementById("result");
 
-let X_PLAYER = "X";
-let O_PLAYER = "O";
+const X_PLAYER = "X";
+const O_PLAYER = "O";
 let currentPlayer = X_PLAYER;
-let moves = 0;
 
 let hiddenBoard = Array(9).fill(null);
 
@@ -25,58 +24,65 @@ const winnerCombinations = [
     [6,4,2]
 ]
 
-const startGame = () => {
-    boxes.forEach(box => box.addEventListener("click", clickonBox, { once:true }));
+function startGame(){
+    boxes.forEach(box => box.addEventListener("click", clickonBox));
+    restartBtn.addEventListener("click", restartGame);
 }
 
 function clickonBox(e){
     const boxID = e.target.id;
 
-    if(hiddenBoard[boxID] != null){
-        console.log("not empty");
+    if(hiddenBoard[boxID] != null)
+    {
         return
     }
     
-    else if(hiddenBoard[boxID] == null){
-        hiddenBoard[boxID] = currentPlayer;
-        e.target.innerText = currentPlayer;
-        moves++;
-        console.log(moves)
+    hiddenBoard[boxID] = currentPlayer;
+    e.target.innerText = currentPlayer;
+    
+    //check for win
 
-       
-        if(playerWins() != false){
-            let winnerBlocks = playerWins();
-            
-            //winnerBlocks.map(box => boxes[box].style.backgroundColor = "red")
-            winnerBlocks.map(box => boxes[box].classList.add("winner-boxes"));
+   checkForWin();
+    
+    // todo: check tie
 
-            result.innerText = currentPlayer + " player WINS!";
-            boxes.forEach(box => box.removeEventListener("click", clickonBox));
-        }
-        else if(moves == 9){
-            result.innerText = "It is a TIE!"
-        }
-        
+    if(checkforTie())
+    {
+        result.innerText = "omg it is tie!";
     }
 
-
     currentPlayer = currentPlayer == X_PLAYER ? O_PLAYER : X_PLAYER;
-    
 }
 
-function playerWins(){
+
+
+function checkforTie(){
+    let isitTie = true;
+    for(var i = 0; i < hiddenBoard.length; i++ ){
+        if(hiddenBoard[i] == null){
+            isitTie = false;
+        }
+    }
+    return isitTie;
+}
+
+function checkForWin(){
     for(let winArray of winnerCombinations){
         let [x,y,z] = winArray;
-        // 
-        let winner = hiddenBoard[x] && (hiddenBoard[x] == hiddenBoard[y] && hiddenBoard[x]) == hiddenBoard[z];
+        let winner = hiddenBoard[x] == currentPlayer && hiddenBoard[y] == currentPlayer && hiddenBoard[z] == currentPlayer;
         if(winner){
-            return[x,y,z];
+            endGame(winArray);
         }
     }
     return false;
 }
 
-restartBtn.addEventListener("click", restartGame);
+function endGame(winArray){
+    result.innerText = currentPlayer + " player WINS!";
+    winArray.map(box => boxes[box].classList.add("winner-boxes"));
+    boxes.forEach(box => box.removeEventListener("click", clickonBox));
+}
+
 
 function restartGame(){
     hiddenBoard.fill(null);
@@ -84,7 +90,6 @@ function restartGame(){
         box.innerText = "";
     })
     
-    moves = 0;
     result.innerText = "";
     currentPlayer = X_PLAYER;
     boxes.forEach(box => box.classList.remove("winner-boxes"));
