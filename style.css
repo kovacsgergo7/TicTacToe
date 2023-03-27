@@ -5,6 +5,9 @@
     --win-box-color:hsl(257, 56%, 77%);
 
     --transition: .1s ease-in;
+
+    --content-width: clamp(10rem, 80vw, 20rem);
+    --border-radius: 0.6rem;
 }
 @import url('https://fonts.googleapis.com/css2?family=Crafty+Girls&display=swap');
 *{
@@ -20,13 +23,18 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+h1{
+    font-size: 3rem;
+    text-transform: uppercase;
+    margin-block: 3rem;
+}
 section {
     padding-block: 3rem;
     text-align: center;
 }
 #gameBoard{
     margin: 2rem auto;
-    width: clamp(10rem, 80vw, 20rem);
+    width:var(--content-width) ;
 
     display: grid;
     gap:5px;
@@ -39,7 +47,7 @@ section {
     cursor: pointer;
     aspect-ratio: 1;
     background-color: var(--box-color);
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     font-size: clamp(1rem, 12vw, 3rem);
     font-weight: 100;
     transition: var(--transition);
@@ -50,24 +58,72 @@ section {
 .winner-boxes:hover{
     background-color: var(--win-box-color);
 }
-button{
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: clamp(0.9rem, 12vw, 1rem);
-    font-weight: bold;
-    margin-block: 2rem;
-    padding: 1rem 3rem;
-    border-radius: 10px;
-    outline: transparent;
-    border: none;
-    background-image: linear-gradient(to right, #ECE9E6 0%, #FFFFFF  51%, #ECE9E6  100%);
-    background-size: 200% auto;
-    transition: var(--transition);
+.gamemode{
+    margin-inline:auto;
+    width: var(--content-width);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    justify-content: center;
 }
-button:hover{
-    background-position: right center;
+button{
+    position: relative;
+    background: #fff;
+    border: none;
+    border-radius: var(--border-radius);
+    outline: transparent;
+    font-family: 'Crafty Girls', cursive;
+   cursor: pointer;
+   padding: .5rem 1rem;
+   font-size: 0.9rem;
+   font-weight: bold;
+   isolation: isolate;
+   overflow: hidden;
+}
+#playervsplayer::after,
+#playervsai::after{
+    position: absolute;
+    content: "";
+    inset: 0;
+    left: 0;
+   width: 0%;
+   height: 100%;
+   background: lightslategray;
+   z-index: -1;
+   transition: .5s;
+}   
+#playervsplayer:hover::after,
+#playervsai:hover::after{
+    width: 100%;
 }
 
+button.active{
+    background: hsl(210, 14%, 33%);
+}
+.restart-game{
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+#restart-button{
+    position: absolute;
+    background-color: lightslategray;
+    margin-block: 1.5rem;
+    opacity: 0;
+    margin-left: -1000px;
+    transition: .3s;
+}
 .winner-boxes{
     background-color: var(--win-box-color);
+}
+
+#result:not(:empty){
+    margin-inline: auto;
+    padding-block: .3rem;
+    max-width: 15rem;
+    width: 90%;
+    background-color: var(--box-color);
+    border-radius: var(--border-radius);
+    margin-top: 5rem;
+    font-size: 1.5rem;
 }
